@@ -1,0 +1,42 @@
+version: '2.1'
+
+services:
+
+  users-db:
+    container_name: users-db
+    build: ./project/db
+    ports:
+        - 5435:5432  # expose ports - HOST:CONTAINER
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: exit 0
+
+  users-service:
+    container_name: users-service
+    build: ./
+    expose:
+      - '5000'
+    environment:
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
+      - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+    depends_on:
+      users-db:
+        condition: service_healthy
+    links:
+      - users-db
+    command: gunicorn -b 0.0.0.0:5000 manage:app
+
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      users-service:
+        condition: service_started
+    links:
+      - users-service
