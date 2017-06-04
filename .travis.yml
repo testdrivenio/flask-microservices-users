@@ -14,7 +14,7 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - psql -c 'create database user_test;' -U postgres
+  - psql -c 'create database users_test;' -U postgres
   - python manage.py recreate_db
 
 script:
