@@ -6,14 +6,12 @@ python:
 service:
   - postgresql
 
-before_install:
-  - export APP_SETTINGS="project.config.TestingConfig"
-  - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
-
 install:
   - pip install -r requirements.txt
 
 before_script:
+  - export APP_SETTINGS="project.config.TestingConfig"
+  - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
   - psql -c 'create database users_test;' -U postgres
   - python manage.py recreate_db
 
