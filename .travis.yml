@@ -1,6 +1,21 @@
-services:
+language: python
+
+python:
+  - "3.6"
+
+service:
   - postgresql
 
-env:
-  - APP_SETTINGS=project.config.TestingConfig
-  - DATABASE_TEST_URL=postgresql://localhost/circle_test
+before_install:
+  - export APP_SETTINGS="project.config.TestingConfig"
+  - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database user_test;' -U postgres
+  - python manage.py recreate_db
+
+script:
+  - python manage.py test
