@@ -1,5 +1,0 @@
-machine:
-  # environment variables
-  environment:
-    APP_SETTINGS: project.config.TestingConfig
-    DATABASE_TEST_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test

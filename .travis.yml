@@ -1,0 +1,6 @@
+services:
+  - postgresql
+
+env:
+  - APP_SETTINGS=project.config.TestingConfig
+  - DATABASE_TEST_URL=postgresql://localhost/circle_test
