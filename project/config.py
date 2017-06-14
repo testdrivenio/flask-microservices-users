@@ -25,7 +25,7 @@ class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
-    BCRYPT_LOG_ROUNDS = 12
+    BCRYPT_LOG_ROUNDS = 4
 
 
 class ProductionConfig(BaseConfig):
