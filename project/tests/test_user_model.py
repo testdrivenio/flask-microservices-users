@@ -19,6 +19,17 @@ class TestUserModel(BaseTestCase):
         self.assertTrue(user.active)
         self.assertTrue(user.created_at)
 
+    def test_encode_auth_token(self):
+        user = add_user('test@test.com', 'test@test.com', 'test')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+
+    def test_decode_auth_token(self):
+        user = add_user('test@test.com', 'test@test.com', 'test')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+        self.assertTrue(User.decode_auth_token(auth_token), user.id)
+
     def test_add_user_duplicate_username(self):
         add_user('test@test.com', 'test@test.com', 'test')
         duplicate_user = User(

@@ -9,7 +9,7 @@ class BaseConfig:
     DEBUG = False
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'my_precious'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     BCRYPT_LOG_ROUNDS = 13
 
 
