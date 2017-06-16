@@ -1,14 +1,14 @@
-# project/api/views.py
+# project/api/users.py
 
 
-from flask import Blueprint, jsonify, request, make_response, render_template
+from flask import Blueprint, jsonify, request, make_response
 from sqlalchemy import exc
 
 from project.api.models import User
 from project import db
 
 
-users_blueprint = Blueprint('users', __name__, template_folder='./templates')
+users_blueprint = Blueprint('users', __name__)
 
 
 @users_blueprint.route('/ping', methods=['GET'])

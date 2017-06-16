@@ -101,7 +101,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps(dict(
                     username='michael',
-                    email='michael@realpython.com'
+                    email='michael@realpython.com',
+                    password='test'
                 )),
                 content_type='application/json',
             )
