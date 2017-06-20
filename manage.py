@@ -63,8 +63,16 @@ def recreate_db():
 @manager.command
 def seed_db():
     """Seeds the database."""
-    db.session.add(User(username='michael', email="michael@realpython.com"))
-    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    db.session.add(User(
+        username='michael',
+        email='michael@realpython.com',
+        password='test'
+    ))
+    db.session.add(User(
+        username='michaelherman',
+        email='michael@mherman.org',
+        password='test'
+    ))
     db.session.commit()
 
 
