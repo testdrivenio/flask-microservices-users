@@ -18,6 +18,7 @@ class TestUserModel(BaseTestCase):
         self.assertTrue(user.password)
         self.assertTrue(user.active)
         self.assertTrue(user.created_at)
+        self.assertTrue(user.admin == False)
 
     def test_encode_auth_token(self):
         user = add_user('test@test.com', 'test@test.com', 'test')
