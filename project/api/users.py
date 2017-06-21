@@ -1,14 +1,15 @@
-# project/api/views.py
+# project/api/users.py
 
 
-from flask import Blueprint, jsonify, request, make_response, render_template
+from flask import Blueprint, jsonify, request, make_response
 from sqlalchemy import exc
 
+from project.api.utils import authenticate, is_admin
 from project.api.models import User
 from project import db
 
 
-users_blueprint = Blueprint('users', __name__, template_folder='./templates')
+users_blueprint = Blueprint('users', __name__)
 
 
 @users_blueprint.route('/ping', methods=['GET'])
@@ -20,7 +21,14 @@ def ping_pong():
 
 
 @users_blueprint.route('/users', methods=['POST'])
-def add_user():
+@authenticate
+def add_user(resp):
+    if not is_admin(resp):
+        response_object = {
+            'status': 'error',
+            'message': 'You do not have permission to do that.'
+        }
+        return make_response(jsonify(response_object)), 401
     post_data = request.get_json()
     if not post_data:
         response_object = {
@@ -30,10 +38,14 @@ def add_user():
         return make_response(jsonify(response_object)), 400
     username = post_data.get('username')
     email = post_data.get('email')
+    password = post_data.get('password')
     try:
         user = User.query.filter_by(email=email).first()
         if not user:
-            db.session.add(User(username=username, email=email))
+            db.session.add(User(
+                username=username,
+                email=email,
+                password=password))
             db.session.commit()
             response_object = {
                 'status': 'success',
@@ -47,6 +59,13 @@ def add_user():
             }
             return make_response(jsonify(response_object)), 400
     except exc.IntegrityError as e:
+        db.session().rollback()
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid payload.'
+        }
+        return make_response(jsonify(response_object)), 400
+    except ValueError as e:
         db.session().rollback()
         response_object = {
             'status': 'fail',
