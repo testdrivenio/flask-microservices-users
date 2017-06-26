@@ -1,7 +1,7 @@
 language: python
 
 python:
-  - "3.6"
+  - '3.6'
 
 service:
   - postgresql
@@ -10,7 +10,7 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - export APP_SETTINGS="project.config.TestingConfig"
+  - export APP_SETTINGS=project.config.TestingConfig
   - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
   - export SECRET_KEY=changeme
   - psql -c 'create database users_test;' -U postgres
