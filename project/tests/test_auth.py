@@ -17,7 +17,7 @@ class TestAuthBlueprint(BaseTestCase):
             response = self.client.post(
                 '/auth/register',
                 data=json.dumps(dict(
-                    username='test@test.com',
+                    username='justatest',
                     email='test@test.com',
                     password='123456'
                 )),
@@ -95,7 +95,7 @@ class TestAuthBlueprint(BaseTestCase):
             response = self.client.post(
                 '/auth/register',
                 data=json.dumps(dict(
-                    username='test@test.com', password='test')),
+                    username='justatest', password='test')),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
@@ -108,7 +108,7 @@ class TestAuthBlueprint(BaseTestCase):
             response = self.client.post(
                 '/auth/register',
                 data=json.dumps(dict(
-                    username='test@test.com', email='test@test.com')),
+                    username='justatest', email='test@test.com')),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())

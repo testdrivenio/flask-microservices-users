@@ -58,14 +58,7 @@ def add_user(resp):
                 'message': 'Sorry. That email already exists.'
             }
             return make_response(jsonify(response_object)), 400
-    except exc.IntegrityError as e:
-        db.session().rollback()
-        response_object = {
-            'status': 'fail',
-            'message': 'Invalid payload.'
-        }
-        return make_response(jsonify(response_object)), 400
-    except ValueError as e:
+    except (exc.IntegrityError, ValueError) as e:
         db.session().rollback()
         response_object = {
             'status': 'fail',

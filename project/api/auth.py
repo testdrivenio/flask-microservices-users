@@ -53,14 +53,7 @@ def register_user():
             }
             return make_response(jsonify(response_object)), 400
     # handler errors
-    except exc.IntegrityError as e:
-        db.session().rollback()
-        response_object = {
-            'status': 'error',
-            'message': 'Invalid payload.'
-        }
-        return make_response(jsonify(response_object)), 400
-    except ValueError as e:
+    except (exc.IntegrityError, ValueError) as e:
         db.session().rollback()
         response_object = {
             'status': 'error',
