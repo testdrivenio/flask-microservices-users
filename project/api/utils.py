@@ -35,6 +35,4 @@ def authenticate(f):
 
 def is_admin(user_id):
     user = User.query.filter_by(id=user_id).first()
-    if not user.admin:
-        return False
-    return True
+    return user.admin
