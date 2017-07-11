@@ -312,7 +312,7 @@ class TestUserService(BaseTestCase):
 
     def test_all_users(self):
         """Ensure get all users behaves correctly."""
-        created = datetime.datetime.now() + datetime.timedelta(-30)
+        created = datetime.datetime.utcnow() + datetime.timedelta(-30)
         add_user('michael', 'michael@realpython.com', 'test', created)
         add_user('fletcher', 'fletcher@realpython.com', 'test')
         with self.client:
