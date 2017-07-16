@@ -1,7 +1,7 @@
 # project/api/users.py
 
 
-from flask import Blueprint, jsonify, request, make_response
+from flask import Blueprint, jsonify, request
 from sqlalchemy import exc
 
 from project.api.utils import authenticate, is_admin
@@ -28,14 +28,14 @@ def add_user(resp):
             'status': 'error',
             'message': 'You do not have permission to do that.'
         }
-        return make_response(jsonify(response_object)), 401
+        return jsonify(response_object), 401
     post_data = request.get_json()
     if not post_data:
         response_object = {
             'status': 'fail',
             'message': 'Invalid payload.'
         }
-        return make_response(jsonify(response_object)), 400
+        return jsonify(response_object), 400
     username = post_data.get('username')
     email = post_data.get('email')
     password = post_data.get('password')
@@ -51,20 +51,20 @@ def add_user(resp):
                 'status': 'success',
                 'message': f'{email} was added!'
             }
-            return make_response(jsonify(response_object)), 201
+            return jsonify(response_object), 201
         else:
             response_object = {
                 'status': 'fail',
                 'message': 'Sorry. That email already exists.'
             }
-            return make_response(jsonify(response_object)), 400
+            return jsonify(response_object), 400
     except (exc.IntegrityError, ValueError) as e:
         db.session().rollback()
         response_object = {
             'status': 'fail',
             'message': 'Invalid payload.'
         }
-        return make_response(jsonify(response_object)), 400
+        return jsonify(response_object), 400
 
 
 @users_blueprint.route('/users/<user_id>', methods=['GET'])
@@ -77,7 +77,7 @@ def get_single_user(user_id):
     try:
         user = User.query.filter_by(id=int(user_id)).first()
         if not user:
-            return make_response(jsonify(response_object)), 404
+            return jsonify(response_object), 404
         else:
             response_object = {
                 'status': 'success',
@@ -87,9 +87,9 @@ def get_single_user(user_id):
                   'created_at': user.created_at
                 }
             }
-            return make_response(jsonify(response_object)), 200
+            return jsonify(response_object), 200
     except ValueError:
-        return make_response(jsonify(response_object)), 404
+        return jsonify(response_object), 404
 
 
 @users_blueprint.route('/users', methods=['GET'])
@@ -111,4 +111,4 @@ def get_all_users():
           'users': users_list
         }
     }
-    return make_response(jsonify(response_object)), 200
+    return jsonify(response_object), 200
