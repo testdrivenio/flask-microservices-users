@@ -10,6 +10,9 @@ ADD ./requirements.txt /usr/src/app/requirements.txt
 # install requirements
 RUN pip install -r requirements.txt
 
+# add entrypoint.sh
+ADD ./entrypoint.sh /usr/src/app/entrypoint.sh
+
 # add app
 ADD . /usr/src/app
 
