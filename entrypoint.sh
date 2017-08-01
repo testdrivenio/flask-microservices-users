@@ -10,4 +10,4 @@ echo "PostgreSQL started"
 
 python manage.py recreate_db
 python manage.py seed_db
-python manage.py runserver -h 0.0.0.0
+gunicorn -b 0.0.0.0:5000 manage:app
