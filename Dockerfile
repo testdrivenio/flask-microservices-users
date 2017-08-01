@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 ADD . /usr/src/app
 
 # run server
-CMD python manage.py runserver -h 0.0.0.0
+CMD ["./entrypoint.sh"]
