@@ -14,7 +14,6 @@ auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/auth/register', methods=['POST'])
 def register_user():
-    print('here')
     # get post data
     post_data = request.get_json()
     if not post_data:
