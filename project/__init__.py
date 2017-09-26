@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 
 
-# instantiate the extentions
+# instantiate the extensions
 db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
